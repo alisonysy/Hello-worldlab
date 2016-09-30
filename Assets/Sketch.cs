@@ -23,39 +23,27 @@ public class Sketch : MonoBehaviour {
         //----------------------
         //YOU WILL NEED TO DECLARE SOME VARIABLES HERE SIMILAR TO THE CREATIVE CODING TUTORIAL
 
-            int totalCubes = 20;
+            int totalCubes = products.Length;
 
-            float totalDistance = 2.9f;
-
-            for (int i = 0; i < totalCubes; i++)
+            float totalDistance = 10;
+            int i = 0;
+            foreach (Product product in products)
             {
                 float perc = i / (float)totalCubes;
-
-                float sin = Mathf.Sin(perc * Mathf.PI / 2);
-
-                float x = 1.8f + sin * totalDistance;
-                float y = 5.0f;
-                float z = 0.0f;
-
-                var newCube = (GameObject)Instantiate(myPrefab, new Vector3(x, y, z), Quaternion.identity);
-                newCube.GetComponent<CubeScript>().SetSize(.45f * (1.0f - perc));
-                newCube.GetComponent<CubeScript>().rotateSpeed = .2f + perc * 4.0f;
-        }   
-
-        //----------------------
-
-        //We can now loop through the array of objects and access each object individually
-        foreach (Product product in products)
-        {
-            //Example of how to use the object
-            Debug.Log("This products name is: " + product.ProductName);
-            //----------------------
-            //YOUR CODE TO INSTANTIATE NEW PREFABS GOES HERE
-
+            i++;
                 
 
-            //----------------------
-        }
+                float x = perc * totalDistance;
+                float y = 5.0f;
+                float z = 0.0f;
+            GameObject newCube = (GameObject)Instantiate(myPrefab, new Vector3(x, y, z), Quaternion.identity);
+                
+                newCube.GetComponent<CubeScript>().SetSize((1.0f - perc)*2);
+                newCube.GetComponent<CubeScript>().rotateSpeed = perc;
+            newCube.GetComponentInChildren<TextMesh>().text = product.ProductName;
+        }   
+
+       
 	}
 	
 	// Update is called once per frame

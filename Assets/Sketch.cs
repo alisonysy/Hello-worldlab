@@ -1,10 +1,11 @@
 using UnityEngine;
 using Pathfinding.Serialization.JsonFx; //make sure you include this using
 
+
 public class Sketch : MonoBehaviour {
     public GameObject myPrefab;
-    public string _WebsiteURL = "http://appname192.azurewebsites.net/tables/product?zumo-api-version=2.0.0";
-
+    private string _WebsiteURL = "http://appname192.azurewebsites.net/tables/employee?zumo-api-version=2.0.0";
+   
     void Start () {
         //Reguest.GET can be called passing in your ODATA url as a string in the form:
         //http://{Your Site Name}.azurewebsites.net/tables/{Your Table Name}?zumo-api-version=2.0.0
@@ -17,17 +18,18 @@ public class Sketch : MonoBehaviour {
             return;
         }
 
+     
         //We can now deserialize into an array of objects - in this case the class we created. The deserializer is smart enough to instantiate all the classes and populate the variables based on column name.
-        Product[] products = JsonReader.Deserialize<Product[]>(jsonResponse);
+        employee[] Name = JsonReader.Deserialize<employee[]>(jsonResponse);
 
         //----------------------
         //YOU WILL NEED TO DECLARE SOME VARIABLES HERE SIMILAR TO THE CREATIVE CODING TUTORIAL
 
-            int totalCubes = products.Length;
+            int totalCubes = Name.Length;
 
             float totalDistance = 10;
             int i = 0;
-            foreach (Product product in products)
+            foreach (employee item  in Name)
             {
                 float perc = i / (float)totalCubes;
             i++;
@@ -40,7 +42,7 @@ public class Sketch : MonoBehaviour {
                 
                 newCube.GetComponent<CubeScript>().SetSize((1.0f - perc)*2);
                 newCube.GetComponent<CubeScript>().rotateSpeed = perc;
-            newCube.GetComponentInChildren<TextMesh>().text = product.ProductName;
+            newCube.GetComponentInChildren<TextMesh>().text = item.Name;
         }   
 
        
